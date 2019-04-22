@@ -9,3 +9,13 @@ const user = {
 };
 
 console.log(user);
+
+// Object destructuring
+const product = {
+  label: "notebook",
+  price: 3,
+  stock: 2011,
+  salesPrice: undefined
+};
+
+const { label, price, rating = 5 } = product;
