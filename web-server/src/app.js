@@ -14,6 +14,10 @@ app.get("/about", (req, res) => {
   res.send("About");
 });
 
+app.get("/weather", (req, res) => {
+  res.send("Weather");
+});
+
 // app.com
 // app.com/help
 // app.com/about
