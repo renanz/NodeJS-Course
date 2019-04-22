@@ -7,11 +7,9 @@ const getNotes = () => {
 
 const addNote = (title, body) => {
   const notes = loadNotes();
-  const duplicateNotes = notes.filter(note => {
-    return note.title === title;
-  });
+  const duplicateNote = notes.find(note => note.title === title);
 
-  if (duplicateNotes.length === 0) {
+  if (!duplicateNote) {
     notes.push({
       title,
       body
@@ -59,13 +57,22 @@ const listNotes = () => {
   });
 };
 
-const readNotes = () => {
-  console.log("read notes");
+const readNotes = title => {
+  const notes = loadNotes();
+  const found = notes.find(note => note.title === title);
+
+  if (found) {
+    console.log(chalk.inverse(found.title));
+    console.log(found.body);
+  } else {
+    console.log(chalk.red.inverse("Note not found"));
+  }
 };
 
 module.exports = {
   getNotes,
   addNote,
   removeNote,
-  listNotes
+  listNotes,
+  readNotes
 };
