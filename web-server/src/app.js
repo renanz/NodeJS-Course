@@ -37,6 +37,14 @@ app.get("/weather", (req, res) => {
   res.send({ location: "Some Place", forecast: 22 });
 });
 
+app.get("*", (req, res) => {
+  res.render("404", {
+    title: "404",
+    message: "Page not found",
+    name: "Renan Zelaya"
+  });
+});
+
 app.listen(3000, () => {
   console.log("Server is up on port 3000");
 });
