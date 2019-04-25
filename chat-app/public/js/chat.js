@@ -28,15 +28,21 @@ $form.addEventListener("submit", e => {
 });
 
 // Received a message
-socket.on("newMessage", message => {
-  const html = Mustache.render(messageTemplate, { message });
+socket.on("newMessage", ({ text: message, createdAt }) => {
+  const html = Mustache.render(messageTemplate, {
+    message,
+    createdAt: moment(createdAt).format("h:mm a")
+  });
 
   $messages.insertAdjacentHTML("beforeend", html);
 });
 
 // Received a location
-socket.on("locationMessage", location => {
-  const html = Mustache.render(locationTemplate, { url: location });
+socket.on("locationMessage", ({ url, createdAt }) => {
+  const html = Mustache.render(locationTemplate, {
+    url,
+    createdAt: moment(createdAt).format("h:mm a")
+  });
 
   $messages.insertAdjacentHTML("beforeend", html);
 });
