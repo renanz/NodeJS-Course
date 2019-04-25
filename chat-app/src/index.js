@@ -14,10 +14,21 @@ app.use(express.static(publicDirectoryPath));
 
 io.on("connection", socket => {
   console.log("New connection");
-  socket.emit("newMessage", "Welcome");
 
-  socket.on("sendMessage", message => {
+  socket.emit("newMessage", "Welcome");
+  socket.broadcast.emit("newMessage", "A new user has joined");
+
+  socket.on("sendMessage", (message, cb) => {
     io.emit("newMessage", message);
+    cb("Delivered");
+  });
+
+  socket.on("sendLocation", ({ latitude, longitude }) => {
+    io.emit("newMessage", `https://google.com/maps?q=${latitude},${longitude}`);
+  });
+
+  socket.on("disconnect", () => {
+    io.emit("newMessage", "A user has left");
   });
 });
 
