@@ -11,6 +11,11 @@ const $messages = document.querySelector("#messages");
 const messageTemplate = document.querySelector("#messageTemplate").innerHTML;
 const locationTemplate = document.querySelector("#locationTemplate").innerHTML;
 
+// Options
+const { username, room } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true
+});
+
 $form.addEventListener("submit", e => {
   e.preventDefault();
 
@@ -64,3 +69,6 @@ $sendLocation.addEventListener("click", e => {
     $sendLocation.removeAttribute("disabled");
   });
 });
+
+// Emit join message
+socket.emit("join", { username, room });

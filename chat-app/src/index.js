@@ -20,11 +20,15 @@ app.use(express.static(publicDirectoryPath));
 io.on("connection", socket => {
   console.log("New connection");
 
-  // Welcome message
-  socket.emit("newMessage", generateMessage("Welcome"));
+  // Event on join
+  socket.on("join", ({ username, room }) => {
+    socket.join(room);
 
-  // Message to others
-  socket.broadcast.emit("newMessage", generateMessage("A new user has joined"));
+    socket.emit("newMessage", generateMessage("Welcome!"));
+    socket.broadcast
+      .to(room)
+      .emit("newMessage", generateMessage(`${username} has joined!`));
+  });
 
   // Event on sendMessage
   socket.on("sendMessage", (message, cb) => {
