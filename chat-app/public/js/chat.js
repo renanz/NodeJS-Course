@@ -33,8 +33,9 @@ $form.addEventListener("submit", e => {
 });
 
 // Received a message
-socket.on("newMessage", ({ text: message, createdAt }) => {
+socket.on("newMessage", ({ username, text: message, createdAt }) => {
   const html = Mustache.render(messageTemplate, {
+    username,
     message,
     createdAt: moment(createdAt).format("h:mm a")
   });
@@ -43,8 +44,9 @@ socket.on("newMessage", ({ text: message, createdAt }) => {
 });
 
 // Received a location
-socket.on("locationMessage", ({ url, createdAt }) => {
+socket.on("locationMessage", ({ username, url, createdAt }) => {
   const html = Mustache.render(locationTemplate, {
+    username,
     url,
     createdAt: moment(createdAt).format("h:mm a")
   });
