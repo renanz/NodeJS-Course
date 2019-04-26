@@ -55,7 +55,6 @@ io.on("connection", socket => {
   // Event on sendMessage
   socket.on("sendMessage", (message, cb) => {
     const user = getUser(socket.id);
-    console.log(user);
     const filter = new Filter();
 
     if (filter.isProfane(message)) {
